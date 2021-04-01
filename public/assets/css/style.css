@@ -1,0 +1,25 @@
+label {
+  font-weight: 600;
+}
+
+hr {
+  border-color: #ddd;
+}
+
+.login-page {
+  background-color: #eee;
+}
+
+.login-box {
+  width: 320px;
+}
+
+.login-box-body {
+  border: 1px solid #ddd;
+  padding: 18px;
+}
+
+.main-header .logo {
+  font-family: "Source Sans Pro", sans-serif;
+  font-weight: 400;
+}

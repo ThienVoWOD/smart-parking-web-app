@@ -1,0 +1,37 @@
+@layout('admin.layouts.app')
+
+@section('content')
+<ul class="breadcrumb">
+  <li><a href="{{route('admin.dashboard')}}">Trang chủ</a></li>
+  <li><a href="{{route('admin.parkings.index')}}">Bãi xe</a></li>
+  <li><a href="{{route('admin.parkings.nfc_cards.index',{parking_id:parking.id})}}">Thẻ Nfc</a></li>
+  <li class="active">Thêm</li>
+</ul>
+<div class="content">
+  <div class="row">
+    <div class="col-md-4">
+      <form
+        action="{{ route('admin.parkings.nfc_cards.store', { parking_id: parking.id }) }}"
+        method="POST"
+        class="box"
+      >
+        <div class="box-header with-border">
+          <div class="box-title">
+            Thêm thẻ NFC
+          </div>
+        </div>
+        <div class="box-body">
+          <div class="{{flashMessages.has('errors.cardCode') ? 'form-group has-error' :'form-group' }}">
+            <label>Mã thẻ</label>
+            <input type="text" class="form-control" name="cardCode" value="{{ flashMessages.get('cardCode', '') }}" />
+            <span class="help-block">{{flashMessages.has('errors.cardCode')? flashMessages.get('errors.cardCode'):''}}</span>
+          </div>
+        </div>
+        <div class="box-footer">
+          <button type="submit" class="btn btn-warning">Xác nhận</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+@endsection

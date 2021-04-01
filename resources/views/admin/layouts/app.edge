@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" >
+  <title>Quản Trị - SmartParking</title>
+
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400italic,600,700" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" />
+  @!section('styles')
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.4.18/css/AdminLTE.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.4.18/css/skins/_all-skins.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="/assets/css/style.css" />
+</head>
+
+<body class="hold-transition skin-yellow sidebar-mini">
+  <div class="wrapper">
+    <div class="main-header">
+      <a href="{{ route('admin.dashboard') }}" class="logo">
+        <span class="logo-mini"><b>P.</b></span>
+        <span class="logo-lg">Smart<b>Parking.</b></span>
+      </a>
+      <div class="navbar navbar-static-top">
+        <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+          <span class="sr-only">Toggle navigation</span>
+        </a>
+        <div class="navbar-custom-menu">
+          <ul class="nav navbar-nav">
+
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">
+                {{ auth.user.name }}
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu">
+                <li>
+                <a href="#">Thông tin cá nhân</a>
+                </li>
+                <li>
+
+                </li>
+                <li class="divider"></li>
+                <li>
+
+                <a href="{{route('auth.logout')}}" >Đăng xuất</a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="main-sidebar">
+      <div class="sidebar">
+        <ul class="sidebar-menu" data-widget="tree">
+          <li class="header">CHUNG</li>
+          <li>
+            <a href="{{ route('admin.dashboard') }}">
+              <i class="fa fa-dashboard"></i>
+              <span>Bảng điều khiển</span>
+            </a>
+          </li>
+          <li class="treeview">
+            <a href="#">
+              <i class="fa fa-handshake-o"></i>
+              <span>Bãi xe</span>
+              <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+            </a>
+            <ul class="treeview-menu">
+              <li>
+                <a href="{{ route('admin.parkings.create') }}">
+                  <i class="fa fa-circle-o"></i>
+                  Thêm
+                </a>
+              </li>
+              <li>
+                <a href="{{ route('admin.parkings.index') }}">
+                  <i class="fa fa-circle-o"></i>
+                  Danh sách
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="header">NÂNG CAO</li>
+          <li class="treeview">
+            <a href="#">
+              <i class="fa fa-user-secret"></i>
+              <span>Quản trị viên</span><span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+            </a>
+            <ul class="treeview-menu">
+              <li>
+                <a href="{{ route('admin.admins.create') }}">
+                  <i class="fa fa-circle-o"></i>
+                  Thêm
+                </a>
+              </li>
+              <li>
+                <a href="{{ route('admin.admins.index') }}">
+                  <i class="fa fa-circle-o"></i>
+                  Danh sách
+                </a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="content-wrapper">
+      @!section('content')
+    </div>
+    <div class="main-footer">
+      <i class="fa fa-code"></i> with <i class="fa fa-laptop"></i> by <a href="#">SmartParking.</a>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.4.18/js/adminlte.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+  @!section('scripts')
+</body>
+</html>

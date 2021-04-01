@@ -1,0 +1,76 @@
+@layout('parking.layouts.app')
+
+@section('content')
+<ul class="breadcrumb">
+  <li><a href="{{route('parking.index')}}">Trang chủ</a></li>
+  <li><a href="{{route('parking.sessions.index')}}">Gửi xe</a></li>
+  <li class="active">Đang gửi</li>
+</ul>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap.min.css">
+
+<div class="container">
+  <center><h1>Danh sách xe đang gửi </h1></center>
+  <div class="content" style="background-color: white;">
+    
+    <table id="table" class="table table-striped table-bordered" style="width:100%">
+      <thead>
+        <tr class="list-header">
+          <th>ID</th>
+          <th>Biển số xe</th>
+          <th>Ảnh</th>
+          <th>Giá</th>
+          <th>Thời gian vào</th>
+          <th>Thời gian ra</th>
+          
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+@endsection
+
+@section('scripts')
+
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.22/js/dataTables.bootstrap.min.js"></script>
+
+<script>
+
+  var data1={{{JSON.stringify(sessions)}}};
+   
+  $(document).ready(function(){
+
+    $('#table').DataTable({
+      "language": {
+            "url": "//cdn.datatables.net/plug-ins/1.10.21/i18n/Vietnamese.json"
+        },
+      processing:true,
+      data:data1,
+      columns:[
+        {data:"id"},
+        {data:"number_plate"},
+        {data:"thumb_url",
+        render:function(data){
+          return `<img alt=""  src="${data}" style="width: 222.347px; height: 148px; margin: 0px;">`
+        }
+        },
+        {data:"price"},
+        {data:"created_at"},
+        {data:"updated_at"},
+             
+      ],
+      
+    });
+   
+  });
+</script>
+@endsection

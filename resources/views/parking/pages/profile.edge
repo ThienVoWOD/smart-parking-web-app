@@ -1,0 +1,46 @@
+@layout('parking.layouts.app')
+
+@section('content')
+<ul class="breadcrumb">
+    <li><a href="{{route('parking.index')}}">Trang chủ</a></li>
+    <li class="active">Thông tin cá nhân</li>
+</ul>
+<div class="content">
+    <div class="row">
+      @if(flashMessages.has('success'))
+    <div class="alert alert-success alert-dismissible">
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+      <h5><i class="icon fas fa-check"></i> Thông báo!</h5>
+      {{flashMessages.get('success')}}
+    </div>
+    @endif
+      <div class="col-md-4">
+      <form method="POST" action="{{route('parking.profile.edit',{id:user.id})}}?_method=PUT" class="box box-info">
+         
+          <div class="box-header with-border">
+            <div class="box-title">
+              Thông tin cá nhân
+            </div>
+          </div>
+          <div class="box-body">
+            <div class="form-group">
+              <label for="name">Họ tên</label>
+              <input type="text" class="form-control" name="name" value="{{user.name}}" />
+            </div>
+            <div class="form-group">
+              <label for="phone_number">Số điện thoại</label>
+              <input type="text" class="form-control" value="{{ user.phoneNumber }}" readonly />
+            </div>
+            
+          </div>
+          <div class="box-footer">
+            <button type="submit" class="btn btn-info">Cập nhật</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+@endsection
+
+@section('scripts')
+@endsection

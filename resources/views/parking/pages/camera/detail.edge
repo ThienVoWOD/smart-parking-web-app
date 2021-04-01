@@ -1,0 +1,59 @@
+@layout('parking.layouts.app')
+
+@section('content')
+<ul class="breadcrumb">
+    <li><a href="{{route('parking.index')}}">Trang chủ</a></li>
+    <li><a href="{{route('parking.camera')}}">Theo dõi</a></li>
+    <li class="active">Chi tiết</li>
+</ul>
+<div class="content-header">
+    <h1>Theo dõi {{cameras.name}}</h1>
+</div>
+<div class="content">
+    <div class="row">
+        
+        @if(cameras.streamUrl)
+        <div class="col-md-6">
+          <video id="player"></video>
+        </div>
+        @endif
+    </div>
+</div>
+
+@endsection
+
+@section('styles')
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/plyr/3.6.2/plyr.css"
+/>
+@endsection
+
+@section('scripts')
+@if(cameras.streamUrl)
+<script src="https://cdnjs.cloudflare.com/ajax/libs/plyr/3.6.2/plyr.min.js"></script>
+<script src="https://cdn.rawgit.com/video-dev/hls.js/18bb552/dist/hls.min.js"></script>
+
+<script>
+const video = document.querySelector("video");
+const source = '{{ cameras.streamUrl }}';
+
+const player = new Plyr(video, {
+  autoplay: true,
+  muted: true,
+  volume: 0,
+  controls: false
+});
+if (!Hls.isSupported()) {
+  video.src = source;
+} else {
+  const hls = new Hls();
+  hls.loadSource(source);
+  hls.attachMedia(video);
+  window.hls = hls;
+}
+
+window.player = player;
+</script>
+@endif
+@endsection

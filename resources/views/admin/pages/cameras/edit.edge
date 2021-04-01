@@ -1,0 +1,83 @@
+@layout('admin.layouts.app')
+
+@section('content')
+<ul class="breadcrumb">
+  <li><a href="{{route('admin.dashboard')}}">Trang chủ</a></li>
+  <li><a href="{{route('admin.parkings.index')}}">Bãi xe</a></li>
+  <li><a href="{{route('admin.parkings.cameras.index',{parking_id:parking.id})}}">Camera</a></li>
+  <li class="active">Sửa</li>
+</ul>
+<div class="content">
+  <div class="row">
+    <div class="col-md-4">
+      <form action="{{ route('admin.parkings.cameras.update', { parking_id: parking.id, id: camera.id }) }}?_method=PUT" method="POST" class="box">
+        <div class="box-header with-border">
+          <div class="box-title">Sửa camera</div>
+        </div>
+        <div class="box-body">
+          <div class="{{flashMessages.has('errors.name') ? 'form-group has-error' :'form-group' }}">
+            <label>Tên</label>
+            <input type="text" class="form-control" name="name" value="{{ flashMessages.get('name', camera.name) }}" />
+            <span class="help-block">{{flashMessages.has('errors.name')? flashMessages.get('errors.name'):''}}</span>
+          </div>
+          <div class="{{flashMessages.has('errors.streamUrl') ? 'form-group has-error' :'form-group' }}">
+            <label>Luồng trực tiếp</label>
+            <input type="text" class="form-control" name="streamUrl" value="{{ flashMessages.get('streamUrl', camera.stream_url || '') }}" />
+            <span class="help-block">{{flashMessages.has('errors.streamUrl')? flashMessages.get('errors.streamUrl'):''}}</span>
+          </div>
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" name="isActive" {{ flashMessages.get('isActive', camera.is_active ? 'on' : '') == 'on' ? 'checked' : '' }} />
+              <span>Kích hoạt</span>
+            </label>
+          </div>
+        </div>
+        <div class="box-footer">
+          <button type="submit" class="btn btn-warning">Xác nhận</button>
+        </div>
+      </form>
+    </div>
+    @if(camera.stream_url)
+    <div class="col-md-4">
+      <video id="player"></video>
+    </div>
+    @endif
+  </div>
+</div>
+@endsection
+
+@section('styles')
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/plyr/3.6.2/plyr.css"
+/>
+@endsection
+
+@section('scripts')
+@if(camera.stream_url)
+<script src="https://cdnjs.cloudflare.com/ajax/libs/plyr/3.6.2/plyr.min.js"></script>
+<script src="https://cdn.rawgit.com/video-dev/hls.js/18bb552/dist/hls.min.js"></script>
+
+<script>
+const video = document.querySelector("video");
+const source = '{{ camera.stream_url }}';
+
+const player = new Plyr(video, {
+  autoplay: true,
+  muted: true,
+  volume: 0,
+  controls: false
+});
+if (!Hls.isSupported()) {
+  video.src = source;
+} else {
+  const hls = new Hls();
+  hls.loadSource(source);
+  hls.attachMedia(video);
+  window.hls = hls;
+}
+
+window.player = player;
+</script>
+@endif
+@endsection

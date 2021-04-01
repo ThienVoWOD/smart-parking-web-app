@@ -1,0 +1,116 @@
+@layout('admin.layouts.app')
+
+@section('content')
+<ul class="breadcrumb">
+  <li><a href="{{route('admin.dashboard')}}">Trang chủ</a></li>
+  <li class="active">Bãi xe</li>
+</ul>
+
+<div class="content">
+  @if(flashMessages.has('success'))
+    <div class="alert alert-success alert-dismissible">
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+      <h5><i class="icon fa fa-check"></i> Thông báo!</h5>
+      {{flashMessages.get('success')}}
+    </div>
+    @endif
+  <div class="box">
+    <div class="box-header with-border">
+      <div class="box-title">Danh sách</div>
+    </div>
+    <div class="box-body no-padding">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Tên</th>
+            <th>Số điện thoại</th>
+            <th>Kích hoạt</th>
+            <th>Ngày đăng ký</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          @each(item in parkings)
+          <tr data-id="{{ item.id }}">
+            <td>{{ item.name }}</td>
+            <td>{{ item.phoneNumber || '---' }}</td>
+            <td>
+              <span class="label {{ item.isActive ? 'label-primary' : 'label-warning' }}">
+                {{ item.isActive ? 'Kích hoạt' : 'Vô hiệu' }}
+              </span>
+            </td>
+            <td>{{ item.createdAt }}</td>
+            <td>
+              <div class="btn-group">
+                <a
+                  href="{{ route('admin.parkings.owners.index', { parking_id: item.id }) }}"
+                  class="btn btn-default btn-sm"
+                >
+                  Tài khoản
+                </a>
+                <a
+                  href="{{ route('admin.parkings.nfc_cards.index', { parking_id: item.id }) }}"
+                  class="btn btn-default btn-sm"
+                >
+                  Thẻ NFC
+                </a>
+                <a
+                  href="{{ route('admin.parkings.cameras.index', { parking_id: item.id }) }}"
+                  class="btn btn-default btn-sm"
+                >
+                  Camera
+                </a>
+                <a href="{{ route('admin.parkings.edit', { id: item.id }) }}" class="btn btn-warning btn-sm"><i class="fa fa-pencil"></i>Sửa</a>
+                <a href="javascript:destroyParking('{{ route('admin.parkings.destroy', { id: item.id }) }}')" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i>Xóa</a>
+              </div>
+            </td>
+          </tr>
+          @endeach
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+@endsection
+
+@section('scripts')
+<script>
+function destroyParking(url) {
+  Swal.fire({
+    icon: 'question',
+    title: 'Xác nhận',
+    html: 'Bạn có chắc muốn xóa bãi xe này?',
+    confirmButtonText: 'Chắc',
+    cancelButtonText: 'Không',
+    showCancelButton: true,
+    showCloseButton: true,
+    showLoaderOnConfirm: true,
+    preConfirm: () => {
+      return $.ajax({
+        method: 'delete',
+        url
+      });
+    },
+    allowOutsideClick: () => !Swal.isLoading()
+  }).then(async (result) => {
+    if (result.isConfirmed) {
+      if (result.value.success) {
+        Swal.fire(
+          'Xong!',
+          'Hoàn tất xóa bãi xe.',
+          'success'
+        ).then(() => {
+          window.location.reload();
+        });
+      } else {
+        Swal.fire(
+          'Lỗi!',
+          'Không thể xóa bãi xe.',
+          'error'
+        );
+      }
+    }
+  })
+}
+</script>
+@endsection

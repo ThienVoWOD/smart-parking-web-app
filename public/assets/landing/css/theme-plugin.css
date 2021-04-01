@@ -1,0 +1,23 @@
+/* ------------------------
+    Table of Css
+
+  1. Bootstrap
+  2. Animate
+  3. Line Awesome
+  4. Themify Icons
+  5. magnific-popup
+  6. Owl Carousel
+  7. Lightslider  
+  8. Jquery Ui
+  9. Spacing
+ ------------------------ */
+
+@import url("https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css");
+@import url("https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.0/animate.min.css");
+@import url("https://cdnjs.cloudflare.com/ajax/libs/line-awesome/1.3.0/line-awesome/css/line-awesome.min.css");
+@import "themify-icons.css";
+@import "magnific-popup.css";
+@import "owl.carousel.css";
+@import "lightslider.min.css";
+@import "jquery-ui.css";
+@import "spacing.css";

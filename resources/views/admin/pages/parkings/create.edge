@@ -1,0 +1,59 @@
+@layout('admin.layouts.app')
+
+@section('content')
+<ul class="breadcrumb">
+  <li><a href="{{route('admin.dashboard')}}">Trang chủ</a></li>
+  <li><a href="{{route('admin.parkings.index')}}">Bãi xe</a></li>
+  <li class="active">Thêm mới</li>
+</ul>
+<div class="content">
+  <div class="row">
+    <div class="col-md-4">
+      <form action="{{ route('admin.parkings.store') }}" method="POST" class="box">
+        <div class="box-header with-border">
+          <div class="box-title">Thêm mới bãi xe</div>
+        </div>
+        <div class="box-body">
+          <div class="{{flashMessages.has('errors.name') ? 'form-group has-error' :'form-group' }}">
+            <label>Tên</label>
+            <input type="text" class="form-control" name="name"  value="{{ flashMessages.get('name', '') }}" />
+          <span class="help-block">{{flashMessages.has('errors.name')? flashMessages.get('errors.name'):''}}</span>
+          </div>
+          <div class="{{flashMessages.has('errors.phoneNumber') ? 'form-group has-error' :'form-group' }}">
+            <label>Số diện thoại</label>
+            <input type="text" class="form-control" name="phoneNumber" value="{{ flashMessages.get('phoneNumber', '') }}" />
+            <span class="help-block">{{flashMessages.has('errors.phoneNumber')? flashMessages.get('errors.phoneNumber'):''}}</span>
+          </div>
+          <div class="{{flashMessages.has('errors.email') ? 'form-group has-error' :'form-group' }}">
+            <label>Email</label>
+            <input type="text" class="form-control" name="email" value="{{ flashMessages.get('email', '') }}" />
+            <span class="help-block">{{flashMessages.has('errors.email')? flashMessages.get('errors.email'):''}}</span>
+          </div>
+          <div class="form-group">
+            <label>Phương tiện</label>
+            <select class="form-control" name="vehicles[]" multiple>
+              @each(item in vehicles)
+              <option value="{{ item.id }}">{{ item.name }}</option>
+              @endeach
+            </select>
+          </div>
+          <div class="{{flashMessages.has('errors.address') ? 'form-group has-error' :'form-group' }}">
+            <label>Địa chỉ</label>
+            <textarea name="address" class="form-control">{{ flashMessages.get('address', '') }}</textarea>
+            <span class="help-block">{{flashMessages.has('errors.address')? flashMessages.get('errors.address'):''}}</span>
+          </div>
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" name="isActive" {{ flashMessages.get('isActive', '') == 'on' ? 'checked' : '' }} />
+              <span>Kích hoạt</span>
+            </label>
+          </div>
+        </div>
+        <div class="box-footer">
+          <button type="submit" class="btn btn-warning">Xác nhận</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+@endsection

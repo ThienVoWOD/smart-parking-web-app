@@ -1,0 +1,35 @@
+@layout('parking.layouts.app')
+
+@section('content')
+<ul class="breadcrumb">
+    <li><a href="{{route('parking.index')}}">Trang chủ</a></li>
+    <li class="active">Theo dõi</li>
+  </ul>
+<div class="content-header">
+  <h1>Theo Dõi</h1>
+</div>
+
+<div class="content">
+  @if(cameras.length == 0)
+  <div class="alert alert-warning">Bãi xe chưa đăng ký lắp đặt camera nào.</div>
+  @endif
+  <div class="row">
+    @each(item in cameras)
+    <div class="col-md-4">
+      <div class="box box-solid">
+        <div class="box-body">
+          <a href="{{route('parking.camera.detail',{id:item.id})}}">
+            <div class="embed-responsive embed-responsive-16by9">
+              <img src="{{  item.streamUrl }}" class="embed-responsive-item bg-black" alt="" width="100%" height="auto"/>
+            </div>
+            <div class="h5" style="margin-bottom: 0;">
+              {{ item.name }}
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+    @endeach
+  </div>
+</div>
+@endsection

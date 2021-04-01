@@ -1,0 +1,45 @@
+@layout('admin.layouts.app')
+
+@section('content')
+<ul class="breadcrumb">
+  <li class="active">Trang chủ</li>
+</ul>
+
+<div class="content">
+  <div class="row">
+    <div class="col-md-4">
+      <div class="info-box">
+        <span class="info-box-icon bg-yellow">
+          <i class="fa fa-home"></i>
+        </span>
+        <div class="info-box-content">
+          <span class="info-box-text">Tổng bãi xe</span>
+        <span class="info-box-number">{{  SLBai.SLBai }}</span>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="info-box">
+        <span class="info-box-icon bg-red">
+          <i class="fa fa-home"></i>
+        </span>
+        <div class="info-box-content">
+          <span class="info-box-text">Tổng thẻ xe</span>
+        <span class="info-box-number">{{SLThe.SLThe}}</span>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="info-box">
+        <span class="info-box-icon bg-aqua">
+          <i class="fa fa-home"></i>
+        </span>
+        <div class="info-box-content">
+          <span class="info-box-text">Tổng lượt gửi xe</span>
+        <span class="info-box-number">{{SLLuot.SLLuot}}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+@endsection

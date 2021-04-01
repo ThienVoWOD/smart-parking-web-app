@@ -1,0 +1,40 @@
+@layout('parking.layouts.app')
+
+@section('content')
+<ul class="breadcrumb">
+  <li><a href="{{route('parking.index')}}">Trang chủ</a></li>
+  <li><a href="{{route('parking.users.index')}}">Nhân viên</a></li>
+  <li class="active">Sửa</li>
+</ul>
+<div class="content">
+  <h1>Sửa nhân viên</h1>
+  <div class="row">
+    <div class="col-md-5">
+    <form method="POST" action="{{route('parking.users.update',{id:employee.id})}}?_method=PUT" class="box">
+      
+        <div class="box-body">
+            <div class="{{flashMessages.has('errors.name') ? 'form-group has-error' :'form-group' }}">
+              <label>Tên</label>
+              <input type="text" class="form-control" name="name" value="{{ flashMessages.get('name', employee.name) }}" />
+              <span class="help-block">{{flashMessages.has('errors.name')? flashMessages.get('errors.name'):''}}</span>
+            </div>
+            <div class="{{flashMessages.has('errors.phoneNumber') ? 'form-group has-error' :'form-group' }}">
+              <label>Số điện thoại</label>
+              <input type="text" class="form-control" name="phoneNumber" value="{{ flashMessages.get('phoneNumber', employee.phoneNumber|| '') }}" />
+              <span class="help-block">{{flashMessages.has('errors.phoneNumber')? flashMessages.get('errors.phoneNumber'):''}}</span>
+            </div>
+            <div class="checkbox">
+              <label>
+                <input type="checkbox" name="isActive" {{ flashMessages.get('isActive', employee.isActive ? 'on' : '') == 'on' ? 'checked' : '' }} />
+                <span>Kích hoạt</span>
+              </label>
+            </div>
+          </div>
+        <div class="box-footer">
+          <button type="submit" class="btn btn-primary">Xác nhận</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+@endsection

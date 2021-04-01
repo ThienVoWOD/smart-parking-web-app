@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" >
+  <title>Quản Trị - SmartParking</title>
+
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400italic,600,700" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" />
+  @!section('styles')
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.4.18/css/AdminLTE.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.4.18/css/skins/_all-skins.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="/assets/css/style.css" />
+</head>
+
+<body class="skin-purple sidebar-mini">
+    <div class="wrapper">
+      <div class="main-header">
+        <a href="{{route('parking.index')}}" class="logo">
+          <span class="logo-mini">S<b>P</b></span>
+          <span class="logo-lg">Smart<b>Parking</b></span>
+        </a>
+        <div class="navbar navbar-static-top">
+          <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+            <span class="sr-only">Toggle navigation</span>
+          </a>
+          <div class="navbar-custom-menu">
+            <ul class="nav navbar-nav">
+              <li class="nav-item">
+                <a href="#" class="nav-link" >
+                  Bãi xe <u> {{request.parking.name}} </u>
+                </a>
+              </li>
+              
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">
+                  {{ auth.user.name }}
+                  <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                  <li>
+                  <a href="{{route('parking.profile')}}">Thông tin cá nhân</a>
+                  </li>
+                  <li>
+                
+                  </li>
+                  <li class="divider"></li>
+                  <li>
+
+                  <a href="{{route('auth.logout')}}" >Đăng xuất</a>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="main-sidebar">
+        <div class="user-panel">
+          <div class="info">
+            {{--  <p>{{ auth.user.name }}</p>  --}}
+            <a href="#">
+              {{--  {{ auth.user.phone_number }}  --}}
+            </a>
+          </div>
+        </div>
+        <div class="sidebar">
+          <ul class="sidebar-menu" data-widget="tree">
+            <li class="header">CHUNG</li>
+            <li class="{{ request.url() == '/parking' ? 'active' : '' }}">
+              <a href="{{ route('parking.index') }}">
+                <i class="fa fa-area-chart"></i>
+                <span>Tổng quan</span>
+              </a>
+            </li>
+            <li class="{{ request.url() == '/parking/cameras' ? 'active' : '' }}">
+              <a href="{{ route('parking.camera') }}">
+                <i class="fa fa-video-camera"></i>
+                <span>Theo dõi</span>
+              </a>
+            </li>
+            <li class="treeview">
+              <a href="#">
+                <i class="fa fa-handshake-o"></i>
+                <span>Gửi xe</span>
+                <span class="pull-right-container">
+                  <i class="fa fa-angle-left pull-right"></i>
+                </span>
+              </a>
+              <ul class="treeview-menu">
+                <li>
+                  <a href="{{ route('parking.sessions.index') }}">
+                    <i class="fa fa-circle-o"></i>
+                    Tất cả
+                  </a>
+                </li>
+                <li>
+                  <a href="{{ route('parking.sessions.holding') }}">
+                    <i class="fa fa-circle-o"></i>
+                    Hiện tại
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li class="treeview">
+              <a href="#">
+                <i class="fa fa-id-card-o"></i>
+                <span>Thẻ gửi xe</span>
+                <span class="pull-right-container">
+                  <i class="fa fa-angle-left pull-right"></i>
+                </span>
+              </a>
+              <ul class="treeview-menu">
+                <li>
+                <a href="{{route('parking.card')}}">
+                    <i class="fa fa-circle-o"></i>
+                    Tất cả
+                  </a>
+                </li>
+                <li>
+                  {{--  <a href="{{ route('parking.cards.lost') }}">
+                    <i class="fa fa-trash text-danger"></i>
+                    Thẻ mất
+                  </a>  --}}
+                </li>
+              </ul>
+            </li>
+            <li>
+              {{--  <a href="{{ route('parking.transactions') }}">
+                <i class="fa fa-money"></i>
+                <span>Thanh toán</span>
+              </a>  --}}
+            </li>
+            <li class="header">NÂNG CAO</li>
+            <li class="treeview">
+              <a href="#">
+                <i class="fa fa-users"></i>
+                <span>Nhân viên</span>
+                <span class="pull-right-container">
+                  <i class="fa fa-angle-left pull-right"></i>
+                </span>
+              </a>
+              <ul class="treeview-menu">
+                <li>
+                  <a href="{{ route('parking.users.index') }}">
+                    <i class="fa fa-circle-o"></i>
+                    Tất cả
+                  </a>
+                </li>
+                <li>
+                  <a href="{{ route('parking.users.create') }}">
+                    <i class="fa fa-circle-o"></i>
+                    Thêm mới
+                  </a>
+                </li>
+                <li>
+                  {{--  <a href="{{ route('parking.users.index') }}">
+                    <i class="fa fa-circle-o"></i>
+                    Tất cả
+                  </a>  --}}
+                </li>
+              </ul>
+            </li>
+            <li>
+              {{--  <a href="{{ route('parking.settings') }}">
+                <i class="fa fa-gear"></i>
+                <span>Thiết lập</span>
+              </a>  --}}
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="content-wrapper">
+        @!section('content')
+      </div>
+      <div class="main-footer">
+        <i class="fa fa-copyright"></i> 2020 <a href="#">Smart<b>Parking</b></a>.
+        All rights reserved.
+      </div>
+    </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.4.18/js/adminlte.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+  @!section('scripts')
+</body>
+</html>

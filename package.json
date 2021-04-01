@@ -1,0 +1,41 @@
+{
+  "name": "@sp/server",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "cd build && yarn install --production && node server.js",
+    "start:dev": "node ace serve --watch",
+    "build": "node ace build --production",
+    "db:reset": "node ace build && node ace migration:rollback && node ace migration:run && node ace db:seed"
+  },
+  "devDependencies": {
+    "@adonisjs/assembler": "^2.0.0",
+    "@types/lodash": "^4.14.162",
+    "@types/socket.io": "^2.1.11",
+    "adonis-preset-ts": "^1.0.4",
+    "pino-pretty": "^4.3.0",
+    "typescript": "^4.0.3",
+    "youch": "^2.1.1",
+    "youch-terminal": "^1.0.1"
+  },
+  "dependencies": {
+    "@adonisjs/ace": "^6.0.0",
+    "@adonisjs/auth": "^4.3.1",
+    "@adonisjs/core": "5.0.0-preview-rc-1.12",
+    "@adonisjs/fold": "^6.0.0",
+    "@adonisjs/lucid": "^8.5.0",
+    "@adonisjs/session": "^3.0.0",
+    "@adonisjs/view": "^2.0.0",
+    "axios": "^0.21.0",
+    "lodash": "^4.17.20",
+    "luxon": "^1.25.0",
+    "moment": "^2.29.1",
+    "mysql": "^2.18.1",
+    "pg": "^8.4.2",
+    "proxy-addr": "^2.0.6",
+    "reflect-metadata": "^0.1.13",
+    "socket.io": "^2.3.0",
+    "source-map-support": "^0.5.19",
+    "yarn": "^1.22.10"
+  }
+}

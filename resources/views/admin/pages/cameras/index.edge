@@ -1,0 +1,101 @@
+@layout('admin.layouts.app')
+
+@section('content')
+<ul class="breadcrumb">
+  <li><a href="{{route('admin.dashboard')}}">Trang chủ</a></li>
+  <li><a href="{{route('admin.parkings.index')}}">Bãi xe</a></li>
+  <li class="active">Camera</li>
+</ul>
+<div class="content">
+  @if(flashMessages.has('success'))
+    <div class="alert alert-success alert-dismissible">
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+      <h5><i class="icon fa fa-check"></i> Thông báo!</h5>
+      {{flashMessages.get('success')}}
+    </div>
+    @endif
+  <div class="box">
+    <div class="box-header with-border">
+      <div class="box-title">Danh sách</div>
+      <div class="box-tools">
+        <a href="{{ route('admin.parkings.cameras.create', { parking_id: parking.id }) }}" class="btn btn-sm btn-default">Thêm camera</a>
+      </div>
+    </div>
+    <div class="box-body no-padding">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Tên</th>
+            <th>Luồn trực tiếp</th>
+            <th>Kích hoạt</th>
+            <th>Ngày thêm</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          @each(item in parking.cameras)
+          <tr>
+            <td>{{ item.name }}</td>
+            <td>{{ item.stream_url }}</td>
+            <td>
+              <span class="label {{ item.is_active ? 'label-primary' : 'label-warning' }}">
+                {{ item.is_active ? 'Kích hoạt' : 'Vô hiệu' }}
+              </span>
+            </td>
+            <td>{{ item.created_at }}</td>
+            <td>
+              <div class="btn-group">
+                <a href="{{ route('admin.parkings.cameras.edit', { parking_id: parking.id, id: item.id }) }}" class="btn btn-warning btn-sm">Sửa</a>
+                <a href="javascript:destroyCamera('{{ route('admin.parkings.cameras.destroy', { parking_id: parking.id, id: item.id }) }}')" class="btn btn-danger btn-sm">Xóa</a>
+              </div>
+            </td>
+          </tr>
+          @endeach
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+@endsection
+
+@section('scripts')
+<script>
+function destroyCamera(url) {
+  Swal.fire({
+    icon: 'question',
+    title: 'Xác nhận',
+    html: 'Bạn có chắc muốn xóa camera này?',
+    confirmButtonText: 'Chắc',
+    cancelButtonText: 'Không',
+    showCancelButton: true,
+    showCloseButton: true,
+    showLoaderOnConfirm: true,
+    preConfirm: () => {
+      return $.ajax({
+        method: 'delete',
+        url
+      });
+    },
+    allowOutsideClick: () => !Swal.isLoading()
+  }).then(async (result) => {
+    if (result.isConfirmed) {
+      if (result.value.success) {
+        Swal.fire(
+          'Xong!',
+          'Hoàn tất xóa camera.',
+          'success'
+        ).then(() => {
+          window.location.reload();
+        });
+      } else {
+        Swal.fire(
+          'Lỗi!',
+          'Không thể xóa camera.',
+          'error'
+        );
+      }
+    }
+  })
+}
+</script>
+@endsection

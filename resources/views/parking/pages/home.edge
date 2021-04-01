@@ -1,0 +1,131 @@
+@layout('parking.layouts.app')
+
+@section('content')
+<ul class="breadcrumb">
+  <li class="active">Trang chủ</li>
+</ul>
+
+<div class="content">
+  <div class="row">
+    <div class="col-md-4">
+      <div class="info-box">
+        <span class="info-box-icon bg-purple">
+          <i class="fa fa-money"></i>
+        </span>
+        <div class="info-box-content">
+
+          <span class="info-box-text">Doanh thu</span>
+        <span class="info-box-number">{{data.price.price == null ? '0' : data.price.price}}</span>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="info-box">
+        <span class="info-box-icon bg-green">
+          <i class="fa fa-handshake-o"></i>
+        </span>
+        <div class="info-box-content">
+          <span class="info-box-text">Lượt gửi</span>
+        <span class="info-box-number">{{data.session.session == null ? '0' : data.session.session}}</span>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="info-box">
+        <span class="info-box-icon bg-orange">
+          <i class="fa fa-id-card-o"></i>
+        </span>
+        <div class="info-box-content">
+          <span class="info-box-text">Thẻ NFC</span>
+        <span class="info-box-number">{{data.card.card == null ? '0' : data.card.card}}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="box box-info">
+        <div class="box-header with-border">
+          <div class="box-title">
+            Lưu lượng gửi xe
+          </div>
+        </div>
+        <div class="box-body">
+          <div id="sessionChart"></div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="box box-info">
+        <div class="box-header with-border">
+          <div class="box-title">
+            Doanh thu hằng ngày
+          </div>
+        </div>
+        <div class="box-body">
+          <div id="priceChart"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+@endsection
+
+@section('scripts')
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
+<script>
+
+new ApexCharts(document.querySelector("#sessionChart"), {
+  series: [
+    {
+      name: "Gửi xe",
+      type: "column",
+      data:{{{JSON.stringify(result.sessions)}}},
+    },
+    {
+      name: "Trả xe",
+      type: "line",
+      data: {{{JSON.stringify(result.sessions)}}},
+    },
+  ],
+  chart: {
+    height: 350,
+    type: "line",
+    fontFamily: "Google Sans, Arial, sans-serif",
+  },
+  stroke: {
+    width: [0, 3],
+  },
+  dataLabels: {
+    enabled: true,
+    enabledOnSeries: [1],
+  },
+
+  labels: {{{JSON.stringify(result.labels)}}},
+  
+}).render();
+
+new ApexCharts(document.querySelector("#priceChart"), {
+  series: [
+    {
+      name: "Phí gửi",
+      type: "area",
+      data: {{{JSON.stringify(revenu.sessions)}}},
+    },
+  ],
+  chart: {
+    height: 350,
+    type: "area",
+    fontFamily: "Google Sans, Arial, sans-serif",
+  },
+  stroke: {
+    width: [3],
+  },
+  dataLabels: {
+    enabled: false,
+  },
+  labels: {{{JSON.stringify(revenu.labels)}}},
+}).render();
+</script>
+@endsection

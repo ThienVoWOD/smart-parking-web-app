@@ -1,0 +1,39 @@
+@layout('parking.layouts.app')
+
+@section('content')
+<ul class="breadcrumb">
+  <li><a href="{{route('parking.index')}}">Trang chủ</a></li>
+  <li><a href="{{route('parking.users.index')}}">Nhân viên</a></li>
+  <li class="active">Thêm</li>
+</ul>
+<div class="content">
+  <h1>Thêm nhân viên</h1>
+  <div class="row">
+    <div class="col-md-5">
+    <form method="POST" action="{{route('parking.users.store')}}" class="box">
+      
+        <div class="box-body">
+          <div class="{{flashMessages.has('errors.name') ? 'form-group has-error' :'form-group' }}">
+            <label>Họ tên</label>
+            <input type="text" name="name" class="form-control" value="{{ flashMessages.get('name', '') }}" />
+            <span class="help-block">{{flashMessages.has('errors.name')? flashMessages.get('errors.name'):''}}</span>
+          </div>
+          <div class="{{flashMessages.has('errors.phone_number') ? 'form-group has-error' :'form-group' }}">
+            <label>SDT</label>
+            <input type="text" name="phone_number" class="form-control" value="{{ flashMessages.get('phone_number', '') }}" />
+            <span class="help-block">{{flashMessages.has('errors.phone_number')? flashMessages.get('errors.phone_number'):''}}</span>
+          </div>
+          <div class="form-check">
+            <input type="checkbox" class="form-check-input" id="exampleCheck1" name="isActive" {{ flashMessages.get('isActive', '') == 'on' ? 'checked' : '' }}>
+            <label class="form-check-label" for="exampleCheck1">Kích hoạt</label>
+          </div>
+
+        </div>
+        <div class="box-footer">
+          <button type="submit" class="btn btn-primary">Tạo</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+@endsection
